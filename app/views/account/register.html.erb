@@ -8,21 +8,33 @@
   <p><%= f.text_field :login, :size => 25, :required => true %></p>
 
   <p><%= f.password_field :password, :size => 25, :required => true %>
-  <em class="info"><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
-
+  <em class="info"><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em>
+  <% if Setting.password_required_char_classes.any? %>
+    <em class="info"><%= l(:text_characters_must_contain, :character_classes => Setting.password_required_char_classes.collect{|c| l("label_password_char_class_#{c}")}.join(", ")) %></em>
+  <% end %>
+  </p>
   <p><%= f.password_field :password_confirmation, :size => 25, :required => true %></p>
 <% end %>
 
 <p><%= f.text_field :firstname, :required => true %></p>
 <p><%= f.text_field :lastname, :required => true %></p>
 <p><%= f.text_field :mail, :required => true %></p>
-<p><%= f.select :language, lang_options_for_select %></p>
+<%= labelled_fields_for :pref, @user.pref do |pref_fields| %>
+<p><%= pref_fields.check_box :hide_mail %></p>
+<% end %>
 
-<% @user.custom_field_values.select {|v| v.editable? || v.required?}.each do |value| %>
+
+<% unless @user.force_default_language? %>
+<p><%= f.select :language, lang_options_for_select %></p>
+<% end %>
+
+<% @user.custom_field_values.select {|v| (Setting.show_custom_fields_on_registration? && v.editable?) || v.required?}.each do |value| %>
   <p><%= custom_field_tag_with_label :user, value %></p>
 <% end %>
 
-<%= recaptcha_tags :hl=>current_language, :site_key => Setting.plugin_recaptcha['recaptcha_public_key'] %>
+<% if RecaptchaPlugin.configured? %>
+<%= recaptcha_tags :hl => current_language, :site_key => RecaptchaPlugin.site_key %>
+<% end %>
 </div>
 
 <%= submit_tag l(:button_submit) %>

@@ -1,10 +1,11 @@
 <fieldset>
   <legend>Plugin Settings</legend>
-  <p>Get a <a href="http://www.google.com/recaptcha" target=_blank>recaptcha keypair</a> and enter it here:</p>
+  <p>Get a <a href="https://www.google.com/recaptcha" target="_blank" rel="noopener">reCAPTCHA v2 keypair</a> and enter it here:</p>
   <p>
-    <label>Public Key</label><%= text_field_tag 'settings[recaptcha_public_key]', settings['recaptcha_public_key'] %>
+    <label>Public Key</label><%= text_field_tag 'settings[recaptcha_public_key]', settings['recaptcha_public_key'], :size => 60 %>
   </p>
   <p>
-    <label>Private Key</label><%= text_field_tag 'settings[recaptcha_private_key]', settings['recaptcha_private_key'] %>
+    <label>Private Key</label><%= text_field_tag 'settings[recaptcha_private_key]', settings['recaptcha_private_key'], :size => 60 %>
   </p>
+  <p><em class="info">As long as no keypair is configured, the captcha is neither displayed nor verified.</em></p>
 </fieldset>
