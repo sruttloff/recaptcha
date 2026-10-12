@@ -6,8 +6,8 @@ Redmine::Plugin.register :recaptcha do
   name 'Recaptcha plugin'
   author 'Christoph Dwertmann'
   description 'Adds a recaptcha to the account registration page'
-  version '2.0.0'
-  url 'https://github.com/cdwertmann/recaptcha'
+  version '2.0.1'
+  url 'https://github.com/sruttloff/recaptcha'
   author_url 'https://github.com/cdwertmann'
   requires_redmine :version_or_higher => '6.0.0'
   settings({
